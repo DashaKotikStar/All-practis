@@ -1,0 +1,50 @@
+import random
+
+class Number:
+    def init(self, numbers=None):
+        if numbers is None:
+            # Генерируем случайный список из 10 элементов
+            n = random.randint(10, 10)
+            self.numbers = [random.randint(-10, 10) for _ in range(n)]
+        else:
+            self.numbers = list(numbers)  # создаём копию
+
+    def process(self):
+        if not self.numbers:
+            return self.numbers
+
+        avg = sum(self.numbers) / len(self.numbers)
+
+        # Определяем, сколько элементов сортировать
+        if avg > 0:
+            # Сортируем первые 2/3
+            split_idx = int(len(self.numbers) * 2 / 3)
+        else:
+            # Сортируем только первую треть
+            split_idx = int(len(self.numbers) / 3)
+
+        # Сортируем первую часть
+        first_part = sorted(self.numbers[:split_idx])
+
+        # Вторую часть, разворачиваем
+        second_part = self.numbers[split_idx:][::-1]
+
+        # Объединяем
+        self.numbers = first_part + second_part
+        return self.numbers
+
+    def str(self):
+        return str(self.numbers)
+
+    def repr(self):
+        return f"Number({self.numbers})"
+
+
+#MAIN
+if name == "main":
+    # Создаем объект с случайными числами
+    num_obj = Number()
+    print("Исходный список:", num_obj)
+
+    result = num_obj.process()
+    print("Обработанный список:", result)
